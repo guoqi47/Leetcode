@@ -1,0 +1,37 @@
+Given an array of integers that is already sorted in ascending order, find two numbers such that they add up to a specific target number.
+
+The function twoSum should return indices of the two numbers such that they add up to the target, where index1 must be less than index2.
+
+Note:
+
+Your returned answers (both index1 and index2) are not zero-based.
+You may assume that each input would have exactly one solution and you may not use the same element twice.
+Example:
+
+Input: numbers = [2,7,11,15], target = 9
+Output: [1,2]
+Explanation: The sum of 2 and 7 is 9. Therefore index1 = 1, index2 = 2.
+
+
+class Solution {
+    public int[] twoSum(int[] num, int tar) {
+        //两个指针,
+        int left = 0, right = num.length-1;
+        while(left<right){
+            if (num[left]+num[right]==tar) break;
+            else if(num[left]+num[right]<tar) left++;
+            else                              right--;
+        }
+        return new int[]{left+1,right+1};
+        
+        //A,O(NlogN)
+        // int a=0,b=0,c = numbers.length;
+        // for(int i=0;i<numbers.length;i++){
+        //     b=Arrays.binarySearch(numbers,i+1,c,target-numbers[i]);//binarySearch(int[] a,int fromIndex,int toIndex,int key)
+        //     //return index of the search key, if it is contained in the array within the specified range;
+        //     //otherwise,(-(insertion point) - 1).
+        //     if(b>0){a=i;break;}
+        // }
+        // return new int[]{a+1,b+1};
+    }
+}

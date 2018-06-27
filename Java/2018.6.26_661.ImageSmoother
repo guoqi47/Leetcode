@@ -34,7 +34,7 @@ class Solution {
         int count = 0,sum=0;
         for(int p=-1; p<=1; p++){
             for(int q=-1; q<=1; q++){
-                if(i+p<0 || i+p>=m || j+q<0 || j+q>=n) continue;
+                if(i+p<0 || i+p>=m || j+q<0 || j+q>=n) continue; //不满足条件的就continue
                 else{
                     count++;
                     sum+=M[i+p][j+q];

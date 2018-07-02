@@ -1,8 +1,9 @@
-package TestCode;
+package algorithm;
 /**
  * 用数组实现自适应大小,可遍历的Stack.
  */
 import java.util.Iterator;
+
 
 public class ResizingArrayStack<Item> implements Iterable<Item>{
 	private int N = 0;

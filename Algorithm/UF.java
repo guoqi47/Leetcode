@@ -1,4 +1,4 @@
-package TestCode;
+package algorithm;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,18 +14,14 @@ import java.util.Scanner;
  *                https://algs4.cs.princeton.edu/15uf/largeUF.txt
  */
 public class UF {
-	private int id[]; //parent link
-	private int sz[]; // size of components for roots
-	private int isOpen[]; // size of components for roots
+	public int id[]; //parent link
+	public int sz[]; // size of components for roots
 	private int count;
 	public UF(int N) {
-		count = N*N;
-		id = new int[N*N];
-		sz = new int[N*N];
-		isOpen = new int[N*N];
-		for(int i=0;i<N*N;i++) {
-			if(i<N) {id[i]=0;sz[i]=N;continue;}
-			if(i>=N*(N-1)) {id[i]=N*(N-1);sz[i]=N;continue;}
+		count = N;
+		id = new int[N];
+		sz = new int[N];
+		for(int i=0;i<N;i++) {
 			id[i]=i;
 			sz[i]=1;
 		}
@@ -36,7 +32,7 @@ public class UF {
 	public boolean connected(int p, int q) {
 		return find(p)==find(q);
 	}
-	private int find(int p) {
+	public int find(int p) {
 		while(p!=id[p]) p=id[p];
 		return p;
 	}

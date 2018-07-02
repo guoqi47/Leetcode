@@ -1,0 +1,45 @@
+Given a word, you need to judge whether the usage of capitals in it is right or not.
+
+We define the usage of capitals in a word to be right when one of the following cases holds:
+
+All letters in this word are capitals, like "USA".
+All letters in this word are not capitals, like "leetcode".
+Only the first letter in this word is capital if it has more than one letter, like "Google".
+Otherwise, we define that this word doesn't use capitals in a right way.
+Example 1:
+Input: "USA"
+Output: True
+Example 2:
+Input: "FlaG"
+Output: False
+
+class Solution {
+    public boolean detectCapitalUse(String word) {
+        //用了String.toUpperCase;String.toLowerCase;和之前刚用的substring
+        return word.equals(word.toUpperCase())||
+            word.equals(word.toLowerCase())||
+            (Character.isUpperCase(word.charAt(0))&&
+             word.substring(1).equals(word.substring(1).toLowerCase()));
+        
+        //思路简单,但不简洁
+        // char[] ch = word.toCharArray();
+        // if(ch.length==1) return true;
+        // if(ch[0]>='a' && ch[0]<='z'){
+        //     for(int i=1;i<ch.length;i++){
+        //         if(!(ch[i]>='a' && ch[i]<='z')) return false;
+        //     }
+        //     return true;
+        // }
+        // else if(ch[1]>='A' && ch[1]<='Z'){
+        //     for(int i=2;i<ch.length;i++){
+        //         if(!(ch[i]>='A' && ch[i]<='Z')) return false;
+        //     }
+        //     return true;
+        // }else{
+        //     for(int i=1;i<ch.length;i++){
+        //         if(!(ch[i]>='a' && ch[i]<='z')) return false;
+        //     }
+        //     return true;
+        // }
+    }
+}

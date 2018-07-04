@@ -1,0 +1,39 @@
+Write a function to delete a node (except the tail) in a singly linked list, given only access to that node.
+
+Given linked list -- head = [4,5,1,9], which looks like following:
+
+    4 -> 5 -> 1 -> 9
+Example 1:
+
+Input: head = [4,5,1,9], node = 5
+Output: [4,1,9]
+Explanation: You are given the second node with value 5, the linked list
+             should become 4 -> 1 -> 9 after calling your function.
+Example 2:
+
+Input: head = [4,5,1,9], node = 1
+Output: [4,5,9]
+Explanation: You are given the third node with value 1, the linked list
+             should become 4 -> 5 -> 9 after calling your function.
+
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+
+//题解：这道题的意思是向函数传入链表的某一节点，然后将其删除掉。
+//这里和以前不一样的地方在于，可以通过头指针遍历到需要删除的节点位置，
+//而这道题只给了需要删除的节点的位置.
+//所以先交换当前节点和下一节点的值，然后删除下一节点即可。
+
+class Solution {
+    public void deleteNode(ListNode node) {
+        node.val = node.next.val;
+        node.next = node.next.next;
+    }
+}

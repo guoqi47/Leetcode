@@ -1,0 +1,53 @@
+Given a sorted linked list, delete all duplicates such that each element appear only once.
+
+Example 1:
+
+Input: 1->1->2
+Output: 1->2
+Example 2:
+
+Input: 1->1->2->3->3
+Output: 1->2->3
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        //递归解法
+        if(head==null || head.next==null) return head;
+        head.next = deleteDuplicates(head.next);
+        return (head.val==head.next.val)?head.next: head;
+        
+        // 迭代解法
+        // if(head==null || head.next==null) return head;
+        // ListNode newhead = head;
+        // while(newhead.next!=null){
+        //     if(newhead.val==newhead.next.val){
+        //         newhead.next = newhead.next.next;
+        //         continue;
+        //     } 
+        //     newhead = newhead.next;
+        // }
+        // return head;
+        
+        //A,没注意到是sorted linked list
+        // if (head==null) return head;
+        // ListNode newhead = head;
+        // HashSet<Integer> set = new HashSet<Integer>();
+        // set.add(head.val);
+        // while(newhead.next!=null){
+        //     if(set.contains(newhead.next.val))  newhead.next = newhead.next.next;
+        //     else{
+        //         set.add(newhead.next.val);
+        //         newhead = newhead.next;
+        //     }
+        // }
+        // return head;
+    }
+}

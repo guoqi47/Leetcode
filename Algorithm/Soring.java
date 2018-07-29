@@ -86,10 +86,32 @@ public class Soring {
 		}
 	}
 	
+	public static void quickSort(Comparable[] a) {
+		quickSort(a,0,a.length-1);
+	}
+	public static void quickSort(Comparable[] a, int lo, int hi) {
+		if(hi<=lo) return;
+		int j = partition(a,lo,hi);
+		quickSort(a,lo,j-1);
+		quickSort(a,j+1,hi);
+	}
+	public static int partition(Comparable[] a,int lo, int hi) {
+		int i=lo, j=hi+1;
+		Comparable v = a[lo];
+		while(i<j) {
+			while(less(a[++i],v)) if(i>=hi) break;
+			while(less(v,a[--j])) if(j<=lo) break;
+			if(i>=j) break;
+			exch(a,i,j);
+		}
+		exch(a,lo,j);
+		return j;
+	}
+	
 	public static void main(String args[]) {
 //		String[] s = new String[] {"a","s","d"};
-		Integer[] i = new Integer[] {1,3,2,4,0,8,5};
-		mergeBUSort(i);
+		Integer[] i = new Integer[] {1,3,2,4,0,8,5,3};
+		quickSort(i);
 		show(i);
 		
 	}

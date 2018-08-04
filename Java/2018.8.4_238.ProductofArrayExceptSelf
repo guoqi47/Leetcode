@@ -1,0 +1,32 @@
+Given an array nums of n integers where n > 1,  return an array output such that output[i] is equal to the product of all the elements of nums except nums[i].
+
+Example:
+
+Input:  [1,2,3,4]
+Output: [24,12,8,6]
+Note: Please solve it without division and in O(n).
+
+Follow up:
+Could you solve it with constant space complexity? (The output array does not count as extra space for the purpose of space complexity analysis.)
+
+
+
+class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        //参考的答案,第一遍先把res每个元素赋上其所有左边元素的积
+        //用一个right变量,存储元素右边元素的积,进行第二遍赋值
+        int N = nums.length;
+        int[] res = new int[N];
+        res[0] = 1;
+        for(int i=1;i<N;i++){
+            res[i]=nums[i-1]*res[i-1];
+        }
+        int right=1;
+        for(int i=N-1;i>=0;i--){
+            res[i] *= right;
+            right*=nums[i];
+        }
+        return res;
+    }
+}
+

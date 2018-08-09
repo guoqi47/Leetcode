@@ -1,0 +1,52 @@
+You are given coins of different denominations and a total amount of money amount. Write a function to compute the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return -1.
+
+Example 1:
+
+Input: coins = [1, 2, 5], amount = 11
+Output: 3 
+Explanation: 11 = 5 + 5 + 1
+Example 2:
+
+Input: coins = [2], amount = 3
+Output: -1
+Note:
+You may assume that you have an infinite number of each kind of coin.
+
+
+class Solution {
+    public int coinChange(int[] coins, int amount) {
+        
+        //dp要amount+1个,这样初始化,全都是0.
+        //特别地,dp[0]=0
+        int[] dp = new int[amount+1];
+        int sum = 0;
+        //从1开始赋值
+        while(++sum<=amount){
+            int min = -1;
+            for(int coin:coins){
+                if((sum-coin)>=0 && dp[sum-coin]!=-1){
+                    int temp = dp[sum-coin]+1;
+                    min = (min<0)?temp:Math.min(temp,min);
+                }
+            }
+            dp[sum] = min;
+        }
+        return dp[amount];
+        
+        
+        //不能这么写,会把有可能凑成的误以为凑不成
+        // int count=0;
+        // Arrays.sort(coins);
+        // while(amount>0){
+        //     if(amount<coins[0]) return -1;
+        //     for(int i=coins.length-1;i>=0;i--){
+        //         if(amount>=coins[i]){
+        //             amount-=coins[i];
+        //             count++;
+        //             break;
+        //         }
+        //     }
+        // }
+        // return (amount==0)?count:-1;
+    }
+}

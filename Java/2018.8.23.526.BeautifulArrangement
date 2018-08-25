@@ -37,6 +37,8 @@ class Solution {
             res++;
             return ;
         }
+        //对该pos位,遍历visited数组,可以放到pos位的就先放着
+        //然后有点像DFS
         for(int i=1; i<=N; i++){
             //第i个数字没有被用,且可以被i整除或整除i
             if(visited[i]==0 && (i%pos==0 || pos%i==0)){

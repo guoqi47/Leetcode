@@ -1,0 +1,75 @@
+748. Shortest Completing Word
+DescriptionHintsSubmissionsDiscussSolution
+Pick One
+Find the minimum length word from a given dictionary words, which has all the letters from the string licensePlate. Such a word is said to complete the given string licensePlate
+
+Here, for letters we ignore case. For example, "P" on the licensePlate still matches "p" on the word.
+
+It is guaranteed an answer exists. If there are multiple answers, return the one that occurs first in the array.
+
+The license plate might have the same letter occurring multiple times. For example, given a licensePlate of "PP", the word "pair" does not complete the licensePlate, but the word "supper" does.
+
+Example 1:
+Input: licensePlate = "1s3 PSt", words = ["step", "steps", "stripe", "stepple"]
+Output: "steps"
+Explanation: The smallest length word that contains the letters "S", "P", "S", and "T".
+Note that the answer is not "step", because the letter "s" must occur in the word twice.
+Also note that we ignored case for the purposes of comparing whether a letter exists in the word.
+Example 2:
+Input: licensePlate = "1s3 456", words = ["looks", "pest", "stew", "show"]
+Output: "pest"
+Explanation: There are 3 smallest length words that contains the letters "s".
+We return the one that occurred first.
+
+
+
+class Solution {
+    public String shortestCompletingWord(String licensePlate, String[] words) {
+        //数字去掉,全变小写,做map,对words中每个word比较
+        HashMap<Character,Integer> map = new HashMap<Character,Integer>();
+        char[] cs = licensePlate.toCharArray();
+        for(Character c:cs){
+            if(c<='z'&&c>='a'){
+                int count = map.getOrDefault(c,0);
+                map.put(c,++count);
+                continue;
+            }
+            if(c<='Z'&&c>='A'){
+                int count = map.getOrDefault((char)(c+32),0);
+                map.put((char)(c+32),++count);
+            }
+        }
+        //对words中每个word比较
+        String res="";
+        int minLength = 1000;
+        boolean FLAG;
+        for(String word:words){
+            FLAG = true;
+            for(Character c:map.keySet()){
+                int start = 0;
+                for(int i=0; i<map.get(c); i++){
+                    if(word.indexOf(c,start)<0){
+                        FLAG=false;
+                        break;
+                    }
+                    start = word.indexOf(c,start)+1;
+                }
+                if(!FLAG) break;
+
+            }
+            if(FLAG && word.length()<minLength){
+                res = word;
+                minLength = word.length();
+            }
+        }
+        return res;
+    }
+}
+//别人的solution1:
+//总共就26个字母,对licensePlate和word各造一个map.
+// int [] charMap = new int[26];
+// 然后逐个比对每个word的map
+// 注:String.toLowerCase()中,string中可以有数字,不影响.
+// https://leetcode.com/problems/shortest-completing-word/discuss/110137/Java-Solution-using-character-Array
+//别人的solution2:
+// assign each letter a prime number and compute the product for the license plate. Then, compute the product for each word in wordlist. We know if the char product for a word is divisible by the license plate char product, it contains all the characters.

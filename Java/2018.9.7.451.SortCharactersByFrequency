@@ -50,7 +50,9 @@ class Solution {
         }
         
         // bucket
-        ArrayList<Character>[] bucket = new ArrayList[s.length()+1]; // 一个存着ArrayList的数组, ArrayList<Integer>[]
+        ArrayList<Character>[] bucket = new ArrayList[s.length()+1]; 
+        // 一个存着ArrayList的数组, ArrayList<Integer>[]
+        // 和 int [] a = new int[length] 一样,只不过把int换了
         for(Character c:map.keySet()){
             int count = map.get(c);
             if(bucket[count]==null) bucket[count] = new ArrayList();

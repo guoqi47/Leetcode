@@ -1,0 +1,49 @@
+Given a non-empty integer array, find the minimum number of moves required to make all array elements equal, where a move is incrementing a selected element by 1 or decrementing a selected element by 1.
+
+You may assume the array's length is at most 10,000.
+
+Example:
+
+Input:
+[1,2,3]
+
+Output:
+2
+
+Explanation:
+Only two moves are needed (remember each move increments or decrements one element):
+
+[1,2,3]  =>  [2,2,3]  =>  [2,2,2]
+
+
+
+
+class Solution {
+    public int minMoves2(int[] nums) {
+        // 从直观上来说，可以想象x的值在数轴上移动，
+        // 如果它左边有m个数，右边有n个数，此时如果x向左移动ϵ（没有越过其他的数值）
+        // 它到左边的数的总距离就会减少mϵ，到右边的数的总距离就会增加nϵ，
+        // 对总和的贡献就是(n−m)ϵ。可以看出，在n<m的情况下，我们总是应该向左移动。
+        // 向右同理；总之大概可以推断出，x是中位数时这个结果是最小的。
+        int res=0;
+        Arrays.sort(nums);
+        int index = nums[(int)(nums.length/2)];
+        for(int i=0;i<nums.length;i++){
+            res+=Math.abs(nums[i]-index);
+        }
+        
+        return res;
+        
+        //不A,这是求的平均数
+        // int sum=0;
+        // for(int i:nums){
+        //     sum+=i;
+        // }
+        // int round = Math.round(sum/nums.length);
+        // int res = 0;
+        // for(int i:nums){
+        //     res+=Math.abs(i-round);
+        // }
+        // return res;
+    }
+}

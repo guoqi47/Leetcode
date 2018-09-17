@@ -42,7 +42,8 @@ class Solution {
         List<Integer> l = new ArrayList<Integer>();
         int count=0;
         while(!stack.empty() || root!=null){
-            while(root!=null){ // 一开始用的root.left != null,写不出来
+            while(root!=null){ // 一开始用的root.left != null,写不出来.
+            //后来看,既然该循环最后一句是.left,条件就不用.left了
                 stack.push(root);
                 root = root.left;
             }

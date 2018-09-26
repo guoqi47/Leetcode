@@ -32,29 +32,41 @@ Explanation:
  * }
  */
 class Solution {
-    
-    //A避免使用基本数据类型的数组转换为列表,
-    //所以遍历检查是存在,可以用set
     public int numComponents(ListNode head, int[] G) {
-        int res = 0;
-        boolean FLAG = false;
-        while(head!=null){
-            boolean isin = false;
-            for(int i:G){
-                if(i==head.val){
-                    isin = true;
-                    break;
-                }
-            }
-            if(isin && !FLAG){
-                FLAG = true;
-                res++;
-            }else if(!isin){
-                FLAG = false;
-            }
-            head = head.next;
-        }
-        return res;
+    //使用set,而且不用FLAG
+    Set s = new HashSet(Arrays.asList(G));
+    for(int i:G) s.add(i); //基础数据类型用set也不好使
+    int res = 0;
+    while(head!=null){
+        if(s.contains(head.val) && (head.next==null || !s.contains(head.next.val))) res++;
+        head = head.next;
+    }
+    return res;
+    
+    
+    //A,"避免使用基本数据类型的数组转换为列表",
+    //所以不能将int数组转换为list，然后使用list的contains方法来判断
+    //Arrays.asList(...).contains(...)
+    //使用遍历检查是存在
+        // int res = 0;
+        // boolean FLAG = false;
+        // while(head!=null){
+        //     boolean isin = false;
+        //     for(int i:G){
+        //         if(i==head.val){
+        //             isin = true;
+        //             break;
+        //         }
+        //     }
+        //     if(isin && !FLAG){
+        //         FLAG = true;
+        //         res++;
+        //     }else if(!isin){
+        //         FLAG = false;
+        //     }
+        //     head = head.next;
+        // }
+        // return res;
     }
     
 }

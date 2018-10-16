@@ -37,7 +37,10 @@ class Solution(object):
         return res
         
         
-        # 迭代
+        ## 迭代
+	## 对每个nums中的num,存在包含和不包含两种情况
+	## res = res旧(不包含num) + 加上num的res(包含num)
+
         # res = [[]]
         # for num in nums:
         #     res += [i+[num] for i in res]

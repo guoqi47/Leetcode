@@ -1,0 +1,70 @@
+A zero-indexed array A of length N contains all integers from 0 to N-1. Find and return the longest length of set S, where S[i] = {A[i], A[A[i]], A[A[A[i]]], ... } subjected to the rule below.
+
+Suppose the first element in S starts with the selection of element A[i] of index = i, the next element in S should be A[A[i]], and then A[A[A[i]]]… By that analogy, we stop adding right before a duplicate element occurs in S.
+
+Example 1:
+Input: A = [5,4,0,3,1,6,2]
+Output: 4
+Explanation: 
+A[0] = 5, A[1] = 4, A[2] = 0, A[3] = 3, A[4] = 1, A[5] = 6, A[6] = 2.
+
+One of the longest S[K]:
+S[0] = {A[0], A[5], A[6], A[2]} = {5, 6, 2, 0}
+
+
+
+class Solution:
+    def arrayNesting(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        # 参考discuss，又快了一步，把问题分析透彻就能根据内部的逻辑找出快速解法
+        # 由于array是没有重复元素的，所以都是环,之前没重视没有重复元素，认为环可能有个小尾巴
+        # If a number is visited before, then the set that starts at 
+        # this number must be equal to previous max. So we can safely skip this number
+        maxCount=0
+        for i in range(len(nums)):
+            count=0
+            j = i
+            while nums[j]>=0:
+                count+=1
+                temp = nums[j]
+                nums[j]=-1
+                j = temp
+            maxCount = max(maxCount,count)
+        return maxCount
+    
+        # 暴力解法->稍微改进的增加记录的解法
+        # l=set()
+        # temp = [0]*len(nums)
+        # for i in range(len(nums)):
+        #     if nums[i] in l:
+        #         continue
+        #     count=0
+        #     tempSet = set()
+        #     j = i
+        #     while nums[j] not in tempSet:
+        #         l.add(nums[j])
+        #         if not temp[nums[j]]==0:
+        #             count=count+temp[j]+1
+        #             break
+        #         tempSet.add(nums[j])
+        #         j = nums[j]
+        #         count+=1
+        #     temp[i] = count
+        # return max(temp)
+
+        # 暴力解法，结果正确，但超时
+#         temp = [0]*len(nums)
+#         for i in range(len(nums)):
+#             count=0
+#             tempSet = set()
+#             j = i
+#             while nums[j] not in tempSet: #判断是否在set中
+#                 tempSet.add(nums[j]) #set添加
+#                 j = nums[j]
+#                 count+=1
+#             temp[i] = count
+#         return max(temp)
+        

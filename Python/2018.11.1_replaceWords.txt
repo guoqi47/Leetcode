@@ -1,0 +1,59 @@
+In English, we have a concept called root, which can be followed by some other words to form another longer word - let's call this word successor. For example, the root an, followed by other, which can form another word another.
+
+Now, given a dictionary consisting of many roots and a sentence. You need to replace all the successor in the sentence with the root forming it. If a successor has many roots can form it, replace it with the root with the shortest length.
+
+You need to output the sentence after the replacement.
+
+Example 1:
+Input: dict = ["cat", "bat", "rat"]
+sentence = "the cattle was rattled by the battery"
+Output: "the cat was rat by the bat"
+
+class Solution:
+    def replaceWords(self, dict, sentence):
+        """
+        :type dict: List[str]
+        :type sentence: str
+        :rtype: str
+        """
+        # trie树解法（还没看懂）
+        # https://leetcode.com/problems/replace-words/discuss/105755/Python-Straightforward-with-Explanation-(Prefix-hash-Trie-solutions)
+        #https://www.jianshu.com/p/6f81da81bd02
+        
+        # 将暴力解法中的在dict的list中查找改为在dict的set中查找
+        # 速度快了一点
+        dictset = set(dict)
+        def replace(word):
+            for i in range(len(word)):
+                if word[:i] in dictset:
+                    return word[:i]
+            return word
+        return ' '.join(map(replace,sentence.split()))
+        # join：将 list 中的元素用指定缝合方式拼接在一起
+        # 相当于头尾没有多余空格
+        
+        
+        # AC,暴力解法
+#         res=''
+#         s = sentence.split(' ')
+#         for i in range(len(s)):
+#             for d in dict:
+#                 l = len(d)
+#                 if s[i][:l]==d:
+#                     s[i] = d
+#                     break
+#             res+=' '+s[i]
+#         return res.lstrip() #删除左边空格
+#         #rstrip 删除右边空格
+#         #去除中间空格的两种方法
+#         1、使用字符串函数replace
+
+#         >>> a = 'hello world'
+#         >>> a.replace(' ', '')
+#         'helloworld'
+
+#         2、使用字符串函数split
+
+#         >>> a = ''.join(a.split())
+#         >>> print(a)
+#         helloworld

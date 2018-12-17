@@ -1,0 +1,29 @@
+import math
+class Solution:
+    def printTree(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[str]]
+        """
+        def getHeight(root):
+            if not root:
+                return 0
+            return 1+max(getHeight(root.left),getHeight(root.right))
+        
+        def putValue(res, root, row, left, right):
+            if not root:
+                return 
+            mid = int((left+right)/2)
+            res[row][mid] = str(root.val)
+            putValue(res, root.left, row+1, left, mid-1)
+            putValue(res, root.right, row+1, mid+1, right)
+            
+            
+            
+        
+        h = getHeight(root)
+        cols = int(math.pow(2,h))-1
+        res = [['']*cols for i in range(h)] #初始化对不对
+        putValue(res, root, 0, 0, cols-1)
+        
+        return res

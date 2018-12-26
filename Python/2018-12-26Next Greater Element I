@@ -1,0 +1,36 @@
+class Solution:
+    def nextGreaterElement(self, nums1, nums2):
+        """
+        :type nums1: List[int]
+        :type nums2: List[int]
+        :rtype: List[int]
+        """
+        # 做个dict,对nums2处理,nums2直接用
+#         Key observation:
+#         Suppose we have a decreasing sequence followed by a greater number
+#         For example [5, 4, 3, 2, 1, 6] then the greater number 6 is the next greater element for all previous numbers in the sequence
+
+#         We use a stack to keep a decreasing sub-sequence, whenever we see a number x greater than stack.peek() we pop all elements less than x and for all the popped ones, their next greater element is x
+#         For example [9, 8, 7, 3, 2, 1, 6]
+#         The stack will first contain [9, 8, 7, 3, 2, 1] and then we see 6 which is greater than 1 so we pop 1 2 3 whose next greater element should be 6
+        st = []
+        d = {}
+        for i in nums2:
+            while st and i>st[-1]:
+                d[st.pop()] = i
+            st.append(i)
+
+        return [d.get(i,-1) for i in nums1]
+        
+        
+        
+        
+        # A,常规思路
+        # res=[-1] * len(nums1)
+        # for i in range(len(nums1)):
+        #     index = nums2.index(nums1[i])
+        #     for j in range(index,len(nums2)):
+        #         if nums2[index] < nums2[j]:
+        #             res[i] = nums2[j]
+        #             break
+        # return res

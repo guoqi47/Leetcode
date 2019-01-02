@@ -1,0 +1,69 @@
+Given a circular array (the next element of the last element is the first element of the array), print the Next Greater Number for every element. The Next Greater Number of a number x is the first greater number to its traversing-order next in the array, which means you could search circularly to find its next greater number. If it doesn't exist, output -1 for this number.
+
+Example 1:
+Input: [1,2,1]
+Output: [2,-1,2]
+Explanation: The first 1's next greater number is 2; 
+The number 2 can't find next greater number; 
+The second 1's next greater number needs to search circularly, which is also 2.
+
+
+class Solution:
+    def nextGreaterElements(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        # 大体同Next Greater Element I,I没有重复元素，而这个题会有，用dict会覆盖，所以将index放入栈;
+        #可以不用dict，两个list就可以 
+        # The only difference here is that we use stack to keep the indexes of the decreasing subsequence
+        # https://leetcode.com/problems/next-greater-element-ii/discuss/98270/Python-6-lines-solution-using-stack
+        st= []
+        res = [-1] * len(nums)
+        
+        for i in range(len(nums)*2):
+            index = i%len(nums)
+            while st and nums[index]>nums[st[-1]]:
+                res[st.pop()] = nums[index]
+            st.append(index)
+        return res
+        
+        
+        
+        
+        
+        # 优化了一点，记录了index
+        # if not nums:
+        #     return []
+        # res, index=[-1]*len(nums), [i for i in range(len(nums))]
+        # init = len(nums)-1
+        # while init >=0: #这里的while可以改成for i in range(init,-1,-1)实现
+        #     thisTurn = init+1 if init+1<len(nums) else init+1-len(nums)
+        #     if nums[init]>=nums[thisTurn]:
+        #         thisTurn = index[thisTurn]
+        #     while nums[init]>=nums[thisTurn] and init!=thisTurn:
+        #         thisTurn = thisTurn+1 if thisTurn+1<len(nums) else thisTurn+1-len(nums)
+        #     if init!=thisTurn:
+        #         res[init] = nums[thisTurn]
+        #         index[init] = thisTurn
+        #     init-=1
+        # return res
+        
+        
+        
+        
+        
+        # A,超时
+#         if not nums:
+#             return []
+#         res, index=[-1]*len(nums), []
+#         init = len(nums)-1
+#         while init >=0: #python java for
+#             thisTurn = init+1 if init+1<len(nums) else init+1-len(nums)
+#             while nums[init]>=nums[thisTurn] and init!=thisTurn:
+#                 thisTurn = thisTurn+1 if thisTurn+1<len(nums) else thisTurn+1-len(nums)
+#             if init!=thisTurn:
+                
+#                 res[init] = nums[thisTurn]
+#             init-=1
+#         return res

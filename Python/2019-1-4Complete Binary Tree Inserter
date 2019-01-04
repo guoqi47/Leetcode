@@ -1,0 +1,74 @@
+A complete binary tree is a binary tree in which every level, except possibly the last, is completely filled, and all nodes are as far left as possible.
+
+Write a data structure CBTInserter that is initialized with a complete binary tree and supports the following operations:
+
+CBTInserter(TreeNode root) initializes the data structure on a given tree with head node root;
+CBTInserter.insert(int v) will insert a TreeNode into the tree with value node.val = v so that the tree remains complete, and returns the value of the parent of the inserted TreeNode;
+CBTInserter.get_root() will return the head node of the tree.
+ 
+
+Example 1:
+
+Input: inputs = ["CBTInserter","insert","get_root"], inputs = [[[1]],[2],[]]
+Output: [null,1,[1,2]]
+Example 2:
+
+Input: inputs = ["CBTInserter","insert","insert","get_root"], inputs = [[[1,2,3,4,5,6]],[7],[8],[]]
+Output: [null,3,4,[1,2,3,4,5,6,7,8]]
+
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+import math
+
+class CBTInserter:
+
+    def __init__(self, root):
+        """
+        :type root: TreeNode
+        """
+        # 方法：Store tree nodes to a list in bfs order.
+        # 给的只是tree的root
+        # 为了找父节点，用的list存树的节点。
+        # Node tree[i] has left child tree[2 * i + 1] and tree[2 * i + 2]
+        # 根据上式来反推新插入节点的父节点索引->math.floor((N-1)/2)
+        self.tree = [root]
+        for i in self.tree:
+            if i.left: self.tree.append(i.left)
+            if i.right: self.tree.append(i.right)
+        
+
+    def insert(self, v):
+        """
+        :type v: int
+        :rtype: int
+        """
+        N = len(self.tree) #相当于新节点的下标
+        newNode = TreeNode(v)
+        self.tree.append(newNode)
+        
+        if N%2: 
+            self.tree[math.floor((N-1)/2)].right = newNode
+        else:
+            self.tree[math.floor((N-1)/2)].left = newNode
+        return self.tree[math.floor((N-1)/2)].val
+            
+        
+        
+
+    def get_root(self):
+        """
+        :rtype: TreeNode
+        """
+        # return self.tree[0] 根据题意，应该是这句，只返回root。测试样例给错了，需要返回所有节点
+        return [i.val for i in self.tree]
+
+
+# Your CBTInserter object will be instantiated and called as such:
+# obj = CBTInserter(root)
+# param_1 = obj.insert(v)
+# param_2 = obj.get_root()
